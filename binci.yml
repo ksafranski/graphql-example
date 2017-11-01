@@ -1,0 +1,10 @@
+from: mhart/alpine-node:8
+expose:
+  - 8888:8888
+env:
+  - PORT=8888
+tasks:
+  env: env | sort
+  shell: /bin/sh
+  install: yarn
+  up: yarn run up

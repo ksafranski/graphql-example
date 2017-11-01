@@ -1,0 +1,21 @@
+{
+  "name": "graphql-example",
+  "version": "1.0.0",
+  "description": "Sample GraphQL Project",
+  "main": "index.js",
+  "scripts": {
+    "up": "$(npm bin)/nodemon server/index.js"
+  },
+  "author": "Kent Safranski <Fluidbyte>",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7",
+    "mongodb": "^2.2.33",
+    "nodemon": "^1.12.1",
+    "redash": "^0.23.0"
+  }
+}
