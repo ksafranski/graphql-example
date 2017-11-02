@@ -16,7 +16,7 @@ An example of a relational query:
 
 ```
 {
-	user(id: "1") {
+  user(id: "1") {
     first_name,
     friends {
       first_name
