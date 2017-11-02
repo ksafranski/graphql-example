@@ -29,3 +29,5 @@ An example of a relational query:
 ```
 
 The above resolves relationships between both the (root) `user` and the `group` types.
+
+*Note: if you're a fan of [Docker](https://docker.com) (and who isn't?), there's a [`binci.yml`](./binci.yml) config for running using [Binci](https://github.com/binci/binci)*
