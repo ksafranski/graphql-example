@@ -5,7 +5,7 @@ const {
   GraphQLList
 } = require('graphql')
 
-const db = require('../db')
+const db = require('./db')
 
 const getUserById = (id) => db.readUserById(id)
 

@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const graphQLHTTP = require('express-graphql')
 const app = express()
-const schema = require('./schemas/users')
+const schema = require('./schema')
 
 // ##############################################
 // Statics and setup
