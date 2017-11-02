@@ -7,7 +7,7 @@ const {
 
 const db = require('../db')
 
-const getUserById = (id) => db.read(id)
+const getUserById = (id) => db.readById(id)
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -33,6 +33,12 @@ const QueryType = new GraphQLObjectType({
   name: 'Query',
   description: 'User Query',
   fields: () => ({
+    // Get list of users
+    users: {
+      type: new GraphQLList(UserType),
+      resolve: () => db.readAll()
+    },
+    // Get single user
     user: {
       type: UserType,
       args: {

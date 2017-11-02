@@ -12,17 +12,18 @@ const data = [
     first_name: 'Mary',
     last_name: 'Smith',
     email: 'msmith@email.com',
-    firends: [ '1' ]
+    friends: [ '1' ]
   },
   {
     id: '3',
     first_name: 'Bill',
     last_name: 'Johnson',
     email: 'bjohnson@email.com',
-    groups: [ '1', '2' ]
+    friends: [ '1', '2' ]
   }
 ]
 
 module.exports = {
-  read: (id) => Promise.resolve(data.filter((item) => id.toString() === item.id)[0])
+  readAll: () => Promise.resolve(data),
+  readById: (id) => Promise.resolve(data.filter((item) => id.toString() === item.id)[0])
 }
