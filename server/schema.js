@@ -30,6 +30,10 @@ const UserType = new GraphQLObjectType({
     friends: {
       type: new GraphQLList(UserType),
       resolve: (user) => user.friends.map(getUserById)
+    },
+    groups: {
+      type: new GraphQLList(GroupType),
+      resolve: (user) => user.groups.map(getGroupById)
     }
   })
 })

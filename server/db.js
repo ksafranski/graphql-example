@@ -6,21 +6,24 @@ const data = {
       first_name: 'John',
       last_name: 'Doe',
       email: 'jdoe@email.com',
-      friends: [ '2', '3' ]
+      friends: [ '2', '3' ],
+      groups: [ '1' ]
     },
     {
       id: '2',
       first_name: 'Mary',
       last_name: 'Smith',
       email: 'msmith@email.com',
-      friends: [ '1' ]
+      friends: [ '1' ],
+      groups: [ '1', '2' ]
     },
     {
       id: '3',
       first_name: 'Bill',
       last_name: 'Johnson',
       email: 'bjohnson@email.com',
-      friends: [ '1', '2' ]
+      friends: [ '1', '2' ],
+      groups: [ '2' ]
     }
   ],
   groups: [
