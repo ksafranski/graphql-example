@@ -8,13 +8,6 @@ const {
 const db = require('./db')
 
 // ##############################################
-// Abstract some reusable methods
-
-const getUserById = (id) => db.readUserById(id)
-
-const getGroupById = (id) => db.readGroupById(id)
-
-// ##############################################
 // Define the types used by the schema
 
 // What a user looks like
@@ -37,12 +30,12 @@ const UserType = new GraphQLObjectType({
     // How to iterate over list and associate friends
     friends: {
       type: new GraphQLList(UserType),
-      resolve: (user) => user.friends.map(getUserById)
+      resolve: (user, args, { loaders }) => loaders.user.loadMany(user.friends)
     },
     // How to iterate over list and associate groups
     groups: {
       type: new GraphQLList(GroupType),
-      resolve: (user) => user.groups.map(getGroupById)
+      resolve: (user, args, { loaders }) => loaders.group.loadMany(user.groups)
     }
   })
 })
@@ -80,7 +73,7 @@ const QueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLString }
       },
-      resolve: (root, args) => getUserById(args.id)
+      resolve: (root, args, { loaders }) => loaders.user.load(args.id)
     },
     // Get list of groups
     groups: {
@@ -93,7 +86,7 @@ const QueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLString }
       },
-      resolve: (root, args) => getGroupById(args.id)
+      resolve: (root, args, { loaders }) => loaders.group.load(args.id)
     }
   })
 })
