@@ -26,6 +26,9 @@ app.use(bodyParser.json())
 // Use GraphQL
 
 app.use(graphQLHTTP((req) => {
+  
+  // Setup loaders; these cache (potentially) repetitive
+  // requests against data source
   const userLoader = new DataLoader(
     keys => Promise.all(keys.map(getUserById))
   )
@@ -36,9 +39,12 @@ app.use(graphQLHTTP((req) => {
     user: userLoader,
     group: groupLoader
   }
+  
+  // Return the context and schema
   return {
     context: { loaders },
     schema,
+    // Disable this in prod
     graphiql: true
   }
 }))
