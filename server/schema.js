@@ -1,55 +1,41 @@
-const {
-  GraphQLSchema: Schema,
-  GraphQLObjectType: ObjectType,
-  GraphQLString: String,
-  GraphQLList: List
-} = require('graphql')
-
-const { UserType } = require('./types/user')
-const { GroupType } = require('./types/group')
+const { makeExecutableSchema } = require('graphql-tools')
 
 const db = require('./db')
 
-// ##############################################
-// Define the query type, i.e. how the other types
-// can be / are queried against
+const typeDefs = `
+  type User {
+    id: String
+    first_name: String!
+    last_name: String!
+    email: String!
+    friends: [User!]
+    groups: [Group!]
+  }
+  
+  type Group {
+    id: String
+    name: String!
+  }
+  
+  type Query {
+    users: [User!]!
+    user(id: String!): User
+    groups: [Group!]!
+    group(id: String!): Group
+  }
+`
 
-const QueryType = new ObjectType({
-  name: 'Query',
-  description: 'User Query',
-  fields: () => ({
-    // Get list of users
-    users: {
-      type: new List(UserType),
-      resolve: db.readAllUsers
-    },
-    // Get single user
-    user: {
-      type: UserType,
-      args: {
-        id: { type: String }
-      },
-      resolve: (root, args, { loaders }) => loaders.user.load(args.id)
-    },
-    // Get list of groups
-    groups: {
-      type: new List(GroupType),
-      resolve: db.readAllGroups
-    },
-    // Get single group
-    group: {
-      type: GroupType,
-      args: {
-        id: { type: String }
-      },
-      resolve: (root, args, { loaders }) => loaders.group.load(args.id)
-    }
-  })
-})
+const resolvers = {
+  Query: {
+    users: db.readAllUsers,
+    user: (root, { id }, { loaders }) => loaders.user.load(id),
+    groups: db.readAllGroups,
+    group: (root, { id }, { loaders }) => loaders.group.load(id)
+  },
+  User: {
+    groups: ({ groups }, args, { loaders }) => loaders.group.loadMany(groups),
+    friends: ({ friends }, args, { loaders }) => loaders.user.loadMany(friends)
+  }
+}
 
-// ##############################################
-// Export the schema with the query defined
-
-module.exports = new Schema({
-  query: QueryType
-})
+module.exports = makeExecutableSchema({ typeDefs, resolvers })
